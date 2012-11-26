@@ -1,0 +1,6 @@
+SetEnvIf User-Agent WaspAce EIG allowed
+<Limit GET POST HEAD>
+Order Deny,Allow
+Deny from all
+Allow from env=allowed
+</Limit>

@@ -1,7 +1,8 @@
 WaspAce-Scripts
 ===============
 
-Генератор ви. В разработке
+Генератор ви для DataLife Engine.
+В разработке.
 
 Автор: dredei
 Сайт: http://softez.pp.ua/
