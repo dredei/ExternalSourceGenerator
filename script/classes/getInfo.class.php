@@ -7,7 +7,7 @@ class getInfo {
 
 	function getPages( $period ) {
 		global $config;
-		$db = new db;
+		$db = new db_e;
 		$pages_count = 0;
 		
 		switch ( $period ) {
@@ -31,7 +31,7 @@ class getInfo {
 	
 	function getReferers( $pages ) {
 		global $config;
-		$db = new db;
+		$db = new db_e;
 		$ref_count = 0;
 		
 		for ( $i = 0; $i < count( $pages ); $i++ ) {

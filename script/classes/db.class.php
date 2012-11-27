@@ -1,9 +1,9 @@
 <?php
-class db {
+class db_e {
 	function ExecQuery( $query ) {
 		$res = mysql_query( $query );
 		$i = 0;
-		if ( is_bool($res) ) {
+		if ( is_bool( $res ) ) {
 			$result['count'] = 0;
 		} else {
 			$result['count'] = mysql_num_rows( $res );

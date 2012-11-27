@@ -1,10 +1,10 @@
 <?php
 require_once( 'browser.class.php' );
 
-class WriteInfo { //структура бд юа: id, count, browser_name, browser_version, os, ua, pages
+class WriteInfo {
 	function writeUA( $curr_link, $userAgent ) {
 		global $config;
-		$db = new db;
+		$db = new db_e;
 	
 		$browser = new BrowserExt();
 		$browser->Browser( $userAgent );
@@ -30,6 +30,7 @@ class WriteInfo { //структура бд юа: id, count, browser_name, brows
 			$pages_json = json_encode( $pages );
 			$upd['count'] = $ua_res['rows'][0]['count'] + 1;
 			$upd['pages'] = $pages_json;
+			$upd['date'] = date( 'Y-m-d' );
 			unset( $wr );
 			$wr['id'] = $ua_id;
 			$query = "UPDATE ".$config['db_prefix']."external_ua SET".$db->GenUpdate( $upd ).$db->GenWhere( $wr, 'AND' );	
@@ -42,6 +43,7 @@ class WriteInfo { //структура бд юа: id, count, browser_name, brows
 			$ins['os'] = $os;
 			$ins['ua'] = $ua;	
 			$ins['pages'] = $pages_json;
+			$ins['date'] = date( 'Y-m-d' );
 			$query = "INSERT INTO ".$config['db_prefix']."external_ua".$db->GenInsert( $ins );
 		}
 		$db->ExecQuery( $query );	
@@ -50,7 +52,7 @@ class WriteInfo { //структура бд юа: id, count, browser_name, brows
 	function writeReferer( $http_referer, $curr_link ) {
 		if ( $http_referer != '' ) {		
 			global $config;
-			$db = new db;
+			$db = new db_e;
 			
 			if ( ( strpos( $http_referer, $_SERVER['HTTP_HOST'] ) > 0 ) or ( strpos( $http_referer, 'wp-admin/' ) > 0 ) )
 				return;
@@ -67,6 +69,7 @@ class WriteInfo { //структура бд юа: id, count, browser_name, brows
 				$pages_json = json_encode( $pages );
 				$upd['count'] = $referers_res['rows'][0]['count'] + 1;
 				$upd['pages'] = $pages_json;
+				$upd['date'] = date( 'Y-m-d' );
 				unset( $wr );
 				$wr['id'] = $referer_id;
 				$query = "UPDATE ".$config['db_prefix']."external_referers SET".$db->GenUpdate( $upd ).$db->GenWhere( $wr, 'AND' );				
@@ -76,6 +79,7 @@ class WriteInfo { //структура бд юа: id, count, browser_name, brows
 				$ins['count'] = 1;
 				$ins['referer'] = $http_referer;
 				$ins['pages'] = $pages_json;
+				$ins['date'] = date( 'Y-m-d' );
 				$query = "INSERT INTO ".$config['db_prefix']."external_referers".$db->GenInsert( $ins );
 			}
 			$db->ExecQuery( $query );
@@ -84,11 +88,12 @@ class WriteInfo { //структура бд юа: id, count, browser_name, brows
 	
 	function writePage( $curr_link ) {
 		global $config;
-		$db = new db;
+		$db = new db_e;
 	
 		$ins['count'] = 1;
 		$ins['page'] = $curr_link;
-		$query = "INSERT INTO ".$config['db_prefix']."external_pages".$db->GenInsert( $ins ).' ON DUPLICATE KEY UPDATE count = count + 1';
+		$ins['date'] = date( 'Y-m-d' );
+		$query = "INSERT INTO ".$config['db_prefix']."external_pages".$db->GenInsert( $ins ).' ON DUPLICATE KEY UPDATE count = count + 1, `date` = NOW()';
 		$db->ExecQuery( $query );
 	}
 

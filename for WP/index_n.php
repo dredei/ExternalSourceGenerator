@@ -30,5 +30,5 @@ if ( is_plugin_active( 'ExternalSourceGenerator/external_source_generator.php' )
 	$writeInfo->writeReferer( $_SERVER['HTTP_REFERER'], $_SERVER['REQUEST_URI'] );
 	$writeInfo->writePage( $_SERVER['REQUEST_URI'] );
 	
-	$generate->autoGenerate( 'wp-content/plugins/ExternalSourceGenerator/' );
+	$generate->autoGenerate( 'wp-content/plugins/ExternalSourceGenerator/', 'wp-content/plugins/ExternalSourceGenerator/' );
 }

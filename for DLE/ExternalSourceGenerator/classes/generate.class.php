@@ -15,8 +15,8 @@ class Generate {
 		return $items_json;
 	}
 	
-	function autoGenerate( $path ) {
-		require_once( 'engine/modules/ExternalSourceGenerator/classes/getInfo.class.php' );
+	function autoGenerate( $path, $fpath ) {
+		require_once( $fpath.'classes/getInfo.class.php' );
 	
 		global $config;
 		$db = new db_e;

@@ -21,7 +21,7 @@ WaspAce-Scripts
 	$writeInfo->writeReferer( $_SERVER['HTTP_REFERER'], $_SERVER['REQUEST_URI'] );
 	$writeInfo->writePage( $_SERVER['REQUEST_URI'] );
 	
-	$generate->autoGenerate( '' );
+	$generate->autoGenerate( '', 'engine/modules/ExternalSourceGenerator/' );
 2. Скопировать папку ExternalSourceGenerator в engine/modules .
 3. Скопировать в корень сайта файл external.txt , выставить права на запись.
 4. Выполнить tables.sql .

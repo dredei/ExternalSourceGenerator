@@ -15,11 +15,11 @@ class Generate {
 		return $items_json;
 	}
 	
-	function autoGenerate( $path ) {
-		require_once( $path.'classes/getInfo.class.php' );
+	function autoGenerate( $path, $fpath ) {
+		require_once( $fpath.'classes/getInfo.class.php' );
 	
 		global $config;
-		$db = new db;
+		$db = new db_e;
 		$getInfo = new GetInfo;		
 		
 		$query = "SELECT * FROM ".$config['db_prefix']."external_settings LIMIT 1";
