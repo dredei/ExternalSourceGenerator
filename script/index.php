@@ -13,10 +13,13 @@ $generate = new Generate;
 //$writeInfo->writePage( '/ppp/' );
 
 //print_r( $getInfo->getPages( 'all' ) );
-$pages = $getInfo->getPages( 'all' );
-$referers = $getInfo->getReferers( $pages );
+//$pages = $getInfo->getPages( 'all' );
+//$referers = $getInfo->getReferers( $pages );
 //$pages_json = $generate->generatePages( $pages );
-$p = $generate->generateItems( $pages, $referers );
-print_r( $p );
+//$p = $generate->generateItems( $pages, $referers );
+//print_r( $p );
+
+$p = $generate->generatePaths( 2, array( min => 1, max => 5 ) );
+print( json_encode( $p ) );
 
 ?>
