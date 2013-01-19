@@ -38,6 +38,7 @@ class getInfo {
 			$page = $pages[$i]['Page'];
 			$query = "SELECT * FROM ".$config['db_prefix']."external_referers WHERE pages LIKE '%\"".$this->Scr( $page )."\"%'";
 			$referers_res = $db->ExecQuery( $query );
+			$ref_count = 0;
 			for ( $j = 0; $j < $referers_res['count']; $j++ ) {
 				$referers[$page][$ref_count]['Referer'] = $referers_res['rows'][$j]['referer'];
 				$referers[$page][$ref_count++]['Priority'] = $referers_res['rows'][$j]['count'];

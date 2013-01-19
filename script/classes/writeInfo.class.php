@@ -54,7 +54,7 @@ class WriteInfo {
 			global $config;
 			$db = new db_e;
 			
-			$ignore_links_arr = array( 'wp-admin/', 'wp-content/' );
+			$ignore_links_arr = array( 'wp-admin\/', 'wp-content\/', '\/feed\/' );
 			if ( ( strpos( $http_referer, $_SERVER['HTTP_HOST'] ) > 0 ) or ( preg_match( "/(".implode('|', $ignore_links_arr).")/is", $http_referer ) ) )
 				return;
 
@@ -92,7 +92,7 @@ class WriteInfo {
 		global $config;
 		$db = new db_e;
 		
-		$ignore_links_arr = array( 'wp-admin/', 'wp-content/' );			
+		$ignore_links_arr = array( 'wp-admin\/', 'wp-content\/' );			
 		if ( ( preg_match( "/(".implode('|', $ignore_links_arr).")/is", $curr_link ) ) )
 			return;
 
