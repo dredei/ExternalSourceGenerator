@@ -48,7 +48,7 @@ class Generate {
 			if ( $gen_res['count'] == 1 ) {
 				$getInfo = new GetInfo;
 				$pathsCount = $gen_res['rows'][0]['pathsCount'];
-				$pathRange  = json_decode( $gen_res['rows'][0]['pathsRange'], TRUE );
+				$pathRange  = json_decode( $gen_res['rows'][0]['depthsRange'], TRUE );
 				
 				$query = "UPDATE ".$config['db_prefix']."external_settings SET auto_last_gen = NOW()";				
 				$db->ExecQuery( $query );

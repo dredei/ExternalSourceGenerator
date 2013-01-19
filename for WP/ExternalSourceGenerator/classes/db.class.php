@@ -23,7 +23,11 @@ class db_e {
 			if ( preg_match( '/^(NOT\s)?NULL$/', $value ) ) {
 				$where .= ' `'.$field.'` IS '.mysql_real_escape_string( $value ).'';
 			} else {
-				$where .= ' `'.$field.'`=\''.mysql_real_escape_string($value).'\'';
+				if ( is_string( $value ) ) {
+					$where .= ' `'.$field.'`=\''.mysql_real_escape_string($value).'\'';
+				} else {
+					$where .= ' `'.$field.'`='.mysql_real_escape_string($value).'';
+				}
 			}
 		}
 		$result = ' WHERE '.$where;
@@ -35,10 +39,14 @@ class db_e {
 			if ( strlen( $fields ) > 0 ) $fields .= ', ';
 			if ( strlen($values) > 0 ) $values .= ', ';
 			$fields .= '`'.$field.'`';
-			if ( $value != 'NULL' ) {
-				$values .= "'".mysql_real_escape_string( $value )."'";
+			if ( preg_match( '/^(NOT\s)?NULL$/', $value ) ) {
+				$values .= mysql_real_escape_string( $value );
 			} else {
-				$values .= "".mysql_real_escape_string( $value )."";
+				if ( is_string( $value ) ) {
+					$values .= "'".mysql_real_escape_string( $value )."'";
+				} else {
+					$values .= mysql_real_escape_string( $value );
+				}
 			}
 		}
 		$result = ' ('.$fields.') VALUES ('.$values.')';
@@ -48,10 +56,14 @@ class db_e {
 	function genUpdate( $upd ) {
 		foreach ( $upd as $field => $value ) {
 			if ( strlen( $set ) > 0 ) $set .= ', ';
-			if ( $value != 'NULL' ) {
-				$set .= ' `'.$field.'`=\''.mysql_real_escape_string( $value ).'\'';
-			} else {
+			if ( preg_match( '/^(NOT\s)?NULL$/', $value ) ) {
 				$set .= ' `'.$field.'`='.mysql_real_escape_string( $value );
+			} else {
+				if ( is_string( $value ) ) {
+					$set .= ' `'.$field.'`=\''.mysql_real_escape_string( $value ).'\'';
+				} else {
+					$set .= ' `'.$field.'`='.mysql_real_escape_string( $value ).'';
+				}
 			}
 		}
 		return $set;

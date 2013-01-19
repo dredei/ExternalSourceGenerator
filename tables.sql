@@ -18,10 +18,12 @@ CREATE TABLE  IF NOT EXISTS `ext_external_referers` (
 
 CREATE TABLE  IF NOT EXISTS `ext_external_settings` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `auto_gen_time` int(10) unsigned DEFAULT NULL,
+  `auto_gen_time` int(10) unsigned DEFAULT '24',
   `auto_last_gen` datetime DEFAULT NULL,
-  `pathsCount` int(10) unsigned NOT NULL DEFAULT '3',
-  `pathsRange` varchar(45) NOT NULL DEFAULT '{"Min": 2, "Max": 6}',
+  `pathsCount` int(10) unsigned DEFAULT '3',
+  `depthsRange` varchar(45) DEFAULT '{"Min": 2, "Max": 6}',
+  `password` varchar(50) DEFAULT '21232f297a57a5a743894a0e4a801fc3',
+  `token` varchar(50) DEFAULT 'lol',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 

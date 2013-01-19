@@ -22,7 +22,8 @@ WaspAce-Scripts
 	$writeInfo->writePage( $_SERVER['REQUEST_URI'] );
 	
 	$generate->autoGenerate( '', 'engine/modules/ExternalSourceGenerator/' );
+	
 2. Скопировать папку ExternalSourceGenerator в engine/modules .
 3. Скопировать в корень сайта файл external.txt , выставить права на запись.
-4. Выполнить tables.sql .
-5. Переименовать config.php.new в config.php и указать в нем настройки подключения к бд.
+4. Переименовать config.php.new в config.php и указать в нем настройки подключения к бд.
+5. Запустить install.php , который находится в папке engine/modules/ExternalSourceGenerator/ .

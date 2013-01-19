@@ -1,0 +1,13 @@
+html, body {
+    color: #222;
+    margin: 0;
+    padding: 20px;
+    font: 10pt 'Courier New';
+}
+.content {
+    position: relative;
+    margin: 0 auto;
+    width: 60%;
+    min-width: 300px;
+    max-width: 900px;
+}
