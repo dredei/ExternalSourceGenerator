@@ -1,5 +1,38 @@
 <?php
 class Generate {
+	function generateFakeRefsGoogle( $phrases, $pagesRange ) { //array of ph; return - array of refs
+		$zonesArr = array( 0 => 'ru', 'ua' );		
+		$referers = array();
+		for ( $i = 0; $i < count( $phrases ); $i++ ) {
+			$zone = $zonesArr[ rand( 0, count( $zonesArr ) - 1 ) ];
+			$link = 'http://google.'.$zone.'/url?q='.urlencode( $phrases[$i] ); //page start=10
+			$referers[] = $link;
+		}
+		return $referers;
+	}
+	
+	function generateFakeRefsYandex( $phrases, $pagesRange ) { //array of ph; return - array of refs
+		$zonesArr = array( 0 => 'ru', 'ua' );		
+		$referers = array();
+		for ( $i = 0; $i < count( $phrases ); $i++ ) {
+			$zone = $zonesArr[ rand( 0, count( $zonesArr ) - 1 ) ];
+			$link = 'http://yandex.'.$zone.'/yandsearch?text='.urlencode( $phrases[$i] ); //page p=1
+			$referers[] = $link;
+		}
+		return $referers;
+	}
+	
+	function generateFakeRefsMailRu( $phrases, $pagesRange ) { //array of ph; return - array of refs
+		$zonesArr = array( 0 => 'ru' );		
+		$referers = array();
+		for ( $i = 0; $i < count( $phrases ); $i++ ) {
+			$zone = $zonesArr[ rand( 0, count( $zonesArr ) - 1 ) ];
+			$link = 'http://go.mail.'.$zone.'/search?mailru=1&mg=1&q='.urlencode( $phrases[$i] ); //page num=10&rch=l&sf=20
+			$referers[] = $link;
+		}
+		return $referers;
+	}
+
 	function generatePaths( $pathsCount, $pathRange ) {
 		$paths = array();		
 		for ( $i = 1; $i <= $pathsCount; $i++ ) {
@@ -61,5 +94,4 @@ class Generate {
 		}
 	}	
 }
-
 ?>
