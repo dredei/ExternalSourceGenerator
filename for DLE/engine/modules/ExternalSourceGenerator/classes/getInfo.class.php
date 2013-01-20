@@ -11,14 +11,17 @@ class getInfo {
 		$pages_count = 0;
 		
 		switch ( $period ) {
+			case "yesterday":
+				$query = "SELECT * FROM ".$config['db_prefix']."external_pages WHERE `date` >= (CURDATE()-1) AND `date` < CURDATE();";
+				break;
 			case "week":
-					$query = "";
+				$query = "SELECT * FROM ".$config['db_prefix']."external_pages WHERE year(`date`) = year(now()) and week(`date`, 1) = week(now(), 1);";
 				break;
 			case "month":
-					$query = "";
+				$query = "SELECT * FROM ".$config['db_prefix']."external_pages WHERE date_format(`date`, '%Y%m') = date_format(now(), '%Y%m');";
 				break;
 			case "all":
-					$query = "SELECT * FROM ".$config['db_prefix']."external_pages";
+				$query = "SELECT * FROM ".$config['db_prefix']."external_pages";
 				break;
 		}
 		$pages_res = $db->ExecQuery( $query );
