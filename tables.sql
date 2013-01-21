@@ -24,6 +24,8 @@ CREATE TABLE  IF NOT EXISTS `ext_external_settings` (
   `depthsRange` varchar(45) DEFAULT '{"Min": 2, "Max": 6}',
   `password` varchar(50) DEFAULT '21232f297a57a5a743894a0e4a801fc3',
   `token` varchar(50) DEFAULT 'lol',
+  `exMasks` text,
+  `scriptVersion` float DEFAULT '102.01',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
