@@ -79,7 +79,7 @@ if ( $_SERVER["REQUEST_METHOD"] == 'POST' ) {
 			</div>			
 			<div class="saveSett">
 				<center>
-					<button onClick="$.post( 'ESG_admin.php', { genTime: document.getElementsByName('genTime')[0].value, pathsCount: document.getElementsByName('pathsCount')[0].value, depthsRangeMin: document.getElementsByName('depthsRangeMin')[0].value, depthsRangeMax: document.getElementsByName('depthsRangeMax')[0].value, oldPassword: document.getElementsByName('oldPassword')[0].value, newPassword: document.getElementsByName('newPassword')[0].value, exMasks: document.getElementById('exMasks')[0].value }, function() { Succ(); } );">Сохранить</button>
+					<button onClick="$.post( 'ESG_admin.php', { genTime: document.getElementsByName('genTime')[0].value, pathsCount: document.getElementsByName('pathsCount')[0].value, depthsRangeMin: document.getElementsByName('depthsRangeMin')[0].value, depthsRangeMax: document.getElementsByName('depthsRangeMax')[0].value, oldPassword: document.getElementsByName('oldPassword')[0].value, newPassword: document.getElementsByName('newPassword')[0].value, exMasks: document.getElementById('exMasks').value }, function() { Succ(); } );">Сохранить</button>
 				</center>
 			</div>
 		</div>

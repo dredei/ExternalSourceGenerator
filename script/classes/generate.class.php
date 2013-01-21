@@ -57,11 +57,10 @@ class Generate {
 				$item['Referers'] = $page_referers;
 			}
 			$item['Paths'] = $this->generatePaths( $pathsCount, $pathRange );
-			//$exMasks_tmp = $this->generateExMasks( $exMasks );
-			if ( count( $exMasks ) > 0 ) {
-				$item['ExMasks'] = $exMasks;
-			}
 			$items['Items'][] = $item;
+		}
+		if ( count( $exMasks ) > 0 ) {
+			$items['ExMasks'] = $exMasks;
 		}
 		$items_json = json_encode( $items );
 		return $items_json;

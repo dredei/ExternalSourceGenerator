@@ -54,9 +54,12 @@ class getInfo {
 		global $config;
 		$db = new db_e;
 		
-		$query = "SELECT exMasks FROM ".$config['db_prefix']."external_pages";
+		$query = "SELECT exMasks FROM ".$config['db_prefix']."external_settings";
 		$exMasks_res = $db->ExecQuery( $query );
-		return $exMasks_res['rows'];
+		$exMasks_res['rows'][0]['exMasks'] = str_replace( "\r\n",'', $exMasks_res['rows'][0]['exMasks'] );
+		$exMasks_res['rows'][0]['exMasks'] = str_replace( "\n",'', $exMasks_res['rows'][0]['exMasks'] );
+		$exMasks = explode( ',', $exMasks_res['rows'][0]['exMasks'] );
+		return $exMasks;
 	}
 }
 ?> 
