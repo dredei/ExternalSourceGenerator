@@ -49,5 +49,14 @@ class getInfo {
 		}
 		return $referers;
 	}
+	
+	function getExMasks() {
+		global $config;
+		$db = new db_e;
+		
+		$query = "SELECT exMasks FROM ".$config['db_prefix']."external_pages";
+		$exMasks_res = $db->ExecQuery( $query );
+		return $exMasks_res['rows'];
+	}
 }
 ?> 

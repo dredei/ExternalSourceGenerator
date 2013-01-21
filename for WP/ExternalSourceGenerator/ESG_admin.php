@@ -11,11 +11,12 @@ if ( $_SERVER["REQUEST_METHOD"] == 'POST' ) {
 		$newPassword = $_POST['newPassword'];
 		$st->changePassword( $oldPassword, $newPassword );
 	}
-	$settings['auto_gen_time']        = (int)$_POST['genTime'];
-	$settings['pathsCount']    		  = (int)$_POST['pathsCount'];
-	$depthsRange['Min'] 			  = $_POST['depthsRangeMin'];
-	$depthsRange['Max']			      = $_POST['depthsRangeMax'];
-	$settings['depthsRange'] 	      = (string)json_encode( $depthsRange );;
+	$settings['auto_gen_time'] = (int)$_POST['genTime'];
+	$settings['pathsCount']    = (int)$_POST['pathsCount'];
+	$depthsRange['Min'] 	   = $_POST['depthsRangeMin'];
+	$depthsRange['Max']		   = $_POST['depthsRangeMax'];
+	$settings['depthsRange']   = (string)json_encode( $depthsRange );;
+	$settings['exMasks']       = (string)$_POST['exMasks'];
 	$st->writeSettings( $settings );
 	Exit;
 }
@@ -54,27 +55,31 @@ if ( $_SERVER["REQUEST_METHOD"] == 'POST' ) {
 	<div class="content">	
 		<div class="option">
 			<div class="genTimeOpt">
-				<span class="clickbox referers">Генерировать внешний источник каждые
+				<span>Генерировать внешний источник каждые
 				<input name="genTime" type="number" min="1" max="1000" value="24" required> часа (-ов)</span>
 			</div>
 			<div class="pathsCountOpt">
-				<span class="clickbox pages">Количество путей (paths) для элемента (item): 
+				<span>Количество путей (paths) для элемента (item): 
 				<input name="pathsCount" type="number" min="1" max="100" value="3" required></span>
 			</div>
 			<div class="depthsRange">
-				<span class="clickbox depths">Диапазон глубины для пути:</span><br />
+				<span>Диапазон глубины для пути:</span><br />
 				<span style="padding-left: 15px">От: <input name="depthsRangeMin" type="number" min="1" max="15" value="2" required></span><br />
 				<span style="padding-left: 15px">До: <input name="depthsRangeMax" type="number" min="1" max="15" value="6" required></span>
 			</div>
-			<div class="newPass">
-				<span class="clickbox depths">Старый пароль:</span><br />
-				<span style="padding-left: 15px"><input name="oldPassword" type="password" value=""></span><br />
-				<span class="clickbox depths">Новый пароль:</span><br />
-				<span style="padding-left: 15px"><input name="newPassword" type="password" value=""></span>
+			<div class="exMasks">
+				<span>Игнор. маски (разделять запятыми):</span><br />
+				<span><textarea id="exMasks"></textarea></span>
 			</div>
+			<div class="newPass">
+				<span>Старый пароль:</span><br />
+				<span style="padding-left: 15px"><input name="oldPassword" type="password" value=""></span><br />
+				<span>Новый пароль:</span><br />
+				<span style="padding-left: 15px"><input name="newPassword" type="password" value=""></span>
+			</div>			
 			<div class="saveSett">
 				<center>
-					<button onClick="$.post( 'ESG_admin.php', { genTime: document.getElementsByName('genTime')[0].value, pathsCount: document.getElementsByName('pathsCount')[0].value, depthsRangeMin: document.getElementsByName('depthsRangeMin')[0].value, depthsRangeMax: document.getElementsByName('depthsRangeMax')[0].value, oldPassword: document.getElementsByName('oldPassword')[0].value, newPassword: document.getElementsByName('newPassword')[0].value }, function() { Succ(); } );">Сохранить</button>
+					<button onClick="$.post( 'ESG_admin.php', { genTime: document.getElementsByName('genTime')[0].value, pathsCount: document.getElementsByName('pathsCount')[0].value, depthsRangeMin: document.getElementsByName('depthsRangeMin')[0].value, depthsRangeMax: document.getElementsByName('depthsRangeMax')[0].value, oldPassword: document.getElementsByName('oldPassword')[0].value, newPassword: document.getElementsByName('newPassword')[0].value, exMasks: document.getElementById('exMasks')[0].value }, function() { Succ(); } );">Сохранить</button>
 				</center>
 			</div>
 		</div>

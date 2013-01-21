@@ -47,7 +47,7 @@ class Generate {
 		return $paths;
 	}
 	
-	function generateItems( $pages, $referers, $pathsCount, $pathRange ) { // генерирует итэм для каждой страницы - отдельный
+	function generateItems( $pages, $referers, $pathsCount, $pathRange, $exMasks ) { // генерирует итэм для каждой страницы - отдельный
 		$items['Items'] = array();
 		for ( $i = 0; $i < count( $pages ); $i++ ) {
 			$page = $pages[$i]['Page'];
@@ -57,6 +57,10 @@ class Generate {
 				$item['Referers'] = $page_referers;
 			}
 			$item['Paths'] = $this->generatePaths( $pathsCount, $pathRange );
+			//$exMasks_tmp = $this->generateExMasks( $exMasks );
+			if ( count( $exMasks ) > 0 ) {
+				$item['ExMasks'] = $exMasks;
+			}
 			$items['Items'][] = $item;
 		}
 		$items_json = json_encode( $items );
@@ -81,15 +85,16 @@ class Generate {
 			if ( $gen_res['count'] == 1 ) {
 				$getInfo = new GetInfo;
 				$pathsCount = $gen_res['rows'][0]['pathsCount'];
-				$pathRange  = json_decode( $gen_res['rows'][0]['depthsRange'], TRUE );
+				$pathRange  = json_decode( $gen_res['rows'][0]['depthsRange'], TRUE );				
 				
-				$query = "UPDATE ".$config['db_prefix']."external_settings SET auto_last_gen = NOW()";				
-				$db->ExecQuery( $query );
-				$pages = $getInfo->getPages( 'all' );
+				$pages    = $getInfo->getPages( 'all' );
 				$referers = $getInfo->getReferers( $pages );
-				$external = $this->generateItems( $pages, $referers, $pathsCount, $pathRange );
+				$exMasks  = $getInfo->getExMasks();
+				$external = $this->generateItems( $pages, $referers, $pathsCount, $pathRange, $exMasks );
 				$fp = fopen( $path.'external.txt', 'w+' );
 				$resWrite = fwrite( $fp, $external );
+				$query = "UPDATE ".$config['db_prefix']."external_settings SET auto_last_gen = NOW()";				
+				$db->ExecQuery( $query );
 			}
 		}
 	}	
