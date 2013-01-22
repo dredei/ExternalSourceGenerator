@@ -1,13 +1,13 @@
 <?php
 require_once 'config.php';
+require_once 'classes/version.class.php';
 $db = new db_e;
+$version = new version;
 
 if ( isset($_GET['oldVersion']) ) {
 	$oldVersion = $_GET['oldVersion'];	
 } else {
-	$query = "SELECT scriptVersion FROM ".$config['db_prefix']."external_settings";
-	$res = $db->ExecQuery( $query );
-	$oldVersion = $res['rows'][0]['scriptVersion'];
+	$oldVersion = $version->getVersion();
 }
 switch ( $oldVersion ) {
 	case '120.00':

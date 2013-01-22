@@ -51,6 +51,9 @@ if ( $_SERVER["REQUEST_METHOD"] == 'POST' ) {
 		alert("Настройки сохранены!");
 	}
 	</script>
+	<?php
+		$res = $st->getSettings();
+	?>
 	
 	<div class="content">	
 		<div class="option">
@@ -69,7 +72,7 @@ if ( $_SERVER["REQUEST_METHOD"] == 'POST' ) {
 			</div>
 			<div class="exMasks">
 				<span>Игнор. маски (разделять запятыми):</span><br />
-				<span><textarea id="exMasks"></textarea></span>
+				<span><textarea id="exMasks"><?php print( $res['rows'][0]['exMasks'] ); ?></textarea></span>
 			</div>
 			<div class="newPass">
 				<span>Старый пароль:</span><br />
@@ -86,7 +89,6 @@ if ( $_SERVER["REQUEST_METHOD"] == 'POST' ) {
 	</div>
 	<script type="text/javascript">
 	<?php	
-		$res = $st->getSettings();
 		if ( $res['count'] > 0 ) {
 			$pathRange = json_decode( $res['rows'][0]['depthsRange'], TRUE );
 		
