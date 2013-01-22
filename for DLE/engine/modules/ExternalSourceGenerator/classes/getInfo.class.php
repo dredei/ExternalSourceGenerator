@@ -39,12 +39,17 @@ class getInfo {
 		
 		for ( $i = 0; $i < count( $pages ); $i++ ) {
 			$page = $pages[$i]['Page'];
+			$referers_res = array();
 			$query = "SELECT * FROM ".$config['db_prefix']."external_referers WHERE pages LIKE '%\"".$this->Scr( $page )."\"%'";
 			$referers_res = $db->ExecQuery( $query );
 			$ref_count = 0;
-			for ( $j = 0; $j < $referers_res['count']; $j++ ) {
-				$referers[$page][$ref_count]['Referer'] = $referers_res['rows'][$j]['referer'];
-				$referers[$page][$ref_count++]['Priority'] = $referers_res['rows'][$j]['count'];
+			if ( $referers_res['count'] == 0 ) {
+				$referers[$page] = array();
+			} else {
+				for ( $j = 0; $j < $referers_res['count']; $j++ ) {
+					$referers[$page][$ref_count]['Referer'] = $referers_res['rows'][$j]['referer'];
+					$referers[$page][$ref_count++]['Priority'] = $referers_res['rows'][$j]['count'];
+				}
 			}
 		}
 		return $referers;
@@ -56,9 +61,13 @@ class getInfo {
 		
 		$query = "SELECT exMasks FROM ".$config['db_prefix']."external_settings";
 		$exMasks_res = $db->ExecQuery( $query );
-		$exMasks_res['rows'][0]['exMasks'] = str_replace( "\r\n",'', $exMasks_res['rows'][0]['exMasks'] );
-		$exMasks_res['rows'][0]['exMasks'] = str_replace( "\n",'', $exMasks_res['rows'][0]['exMasks'] );
-		$exMasks = explode( ',', $exMasks_res['rows'][0]['exMasks'] );
+		if ( $exMasks_res['rows'][0]['exMasks'] != '' ) {
+			$exMasks_res['rows'][0]['exMasks'] = str_replace( "\r\n",'', $exMasks_res['rows'][0]['exMasks'] );
+			$exMasks_res['rows'][0]['exMasks'] = str_replace( "\n",'', $exMasks_res['rows'][0]['exMasks'] );
+			$exMasks = explode( ',', $exMasks_res['rows'][0]['exMasks'] );
+		} else {
+			$exMasks = array();
+		}
 		return $exMasks;
 	}
 }

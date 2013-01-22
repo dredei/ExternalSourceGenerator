@@ -27,3 +27,4 @@ WaspAce-Scripts
 3. Переименовать файл external.txt.new в external.txt (если до копирования его не существовало!) , выставить права на запись.
 4. Переименовать config.php.new в config.php и указать в нем настройки подключения к бд.
 5. Запустить install.php , который находится в папке engine/modules/ExternalSourceGenerator/ .
+6. После установки/обновления удалите install.php и update.php !

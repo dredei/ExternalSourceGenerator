@@ -31,3 +31,4 @@ if ( is_plugin_active( 'ExternalSourceGenerator/external_source_generator.php' )
 4. Активировать плагин External Source Generator (WaspAce) в админке.
 5. Переименовать config.php.new в config.php и указать в нем настройки подключения к бд.
 6. Запустить install.php , который находится в папке wp-content/plugins/ExternalSourceGenerator/ .
+7. После установки/обновления удалите install.php и update.php !

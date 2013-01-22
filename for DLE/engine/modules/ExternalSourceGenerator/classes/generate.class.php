@@ -50,6 +50,7 @@ class Generate {
 	function generateItems( $pages, $referers, $pathsCount, $pathRange, $exMasks ) { // генерирует итэм для каждой страницы - отдельный
 		$items['Items'] = array();
 		for ( $i = 0; $i < count( $pages ); $i++ ) {
+			$item = array();
 			$page = $pages[$i]['Page'];
 			$page_referers = $referers[$page];
 			$item['Pages'][0] = $pages[$i];
