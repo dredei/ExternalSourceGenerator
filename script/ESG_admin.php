@@ -17,12 +17,18 @@ if ( $_SERVER["REQUEST_METHOD"] == 'POST' ) {
 	$depthsRange['Max']		   = $_POST['depthsRangeMax'];
 	$settings['depthsRange']   = (string)json_encode( $depthsRange );;
 	$settings['exMasks']       = (string)$_POST['exMasks'];
+	$settings['blackRefs']     = (string)$_POST['blackRefs'];
 	if ( (string)$_POST['archivation'] == 'yes' ) {
-		$settings['archivation'] = 'yes';
+		$settings['archivation'] = (string)'yes';
 	} else {
-		$settings['archivation'] = 'no';
+		$settings['archivation'] = (string)'no';
 	}
-	$st->writeSettings( $settings );
+	$st->writeSettings( $settings );	
+	if ( $_POST['startRefsFilter'] === 'true' ) {
+		require_once 'classes/checkInfo.class.php';
+		
+		checkInfo::checkRefsOnBlackRefs();
+	}
 	Exit;
 }
 ?>
@@ -32,6 +38,7 @@ if ( $_SERVER["REQUEST_METHOD"] == 'POST' ) {
 		<meta charset="UTF-8">
 		<title>External Source Generator (WaspAce)</title>
 		<link href="style.css" type="text/css" rel="stylesheet">
+		<link rel="stylesheet" type="text/css" href="buttons.css"/>
 		<script src="http://code.jquery.com/jquery-1.9.0.min.js" type="text/javascript"></script>
 		<script type="text/javascript" src="js/noty/jquery.noty.js"></script>
 		<script type="text/javascript" src="js/noty/layouts/center.js"></script>
@@ -51,10 +58,55 @@ if ( $_SERVER["REQUEST_METHOD"] == 'POST' ) {
 	</head>
 <body>
 	<script type="text/javascript">
+	var refsFilter = false;
+	
+	function refsFilterMsg(layout) {
+		if ( document.getElementsByName('blackRefs')[0].value.length > 0 ) {
+			var n = noty({
+			text: 'Применить фильтр к существующим http-реферерам?',
+			type: 'alert',
+			dismissQueue: true,
+			layout: layout,
+			theme: 'defaultTheme',
+			buttons: [
+				{addClass: 'btn btn-primary', text: 'Да', onClick: function($noty) {
+					$noty.close();
+					refsFilter = true;
+					saveSettings();
+				}
+				},
+				{addClass: 'btn btn-danger', text: 'Нет', onClick: function($noty) {
+					$noty.close();
+					refsFilter = false;
+					saveSettings();
+					}
+					}
+				]
+			});
+		} else {
+			saveSettings();
+		}
+	}
+	
 	function Succ() {
 		$.noty.consumeAlert({layout: 'topCenter', type: 'success', dismissQueue: true});
 		alert("Настройки сохранены!");
 	}
+	
+	function saveSettings() {
+		$.post( 'ESG_admin.php',
+		{ genTime: document.getElementsByName('genTime')[0].value,
+		  pathsCount: document.getElementsByName('pathsCount')[0].value,
+		  depthsRangeMin: document.getElementsByName('depthsRangeMin')[0].value,
+		  depthsRangeMax: document.getElementsByName('depthsRangeMax')[0].value,
+		  oldPassword: document.getElementsByName('oldPassword')[0].value,
+		  newPassword: document.getElementsByName('newPassword')[0].value,
+		  exMasks: document.getElementsByName('exMasks')[0].value,
+		  archivation: document.getElementsByName('enableArchivation')[0].value,
+		  blackRefs: document.getElementsByName('blackRefs')[0].value,
+		  startRefsFilter: refsFilter },
+		function() { Succ(); } );
+	}	
 	</script>
 	<?php
 		$res = $st->getSettings();
@@ -82,12 +134,12 @@ if ( $_SERVER["REQUEST_METHOD"] == 'POST' ) {
 				<label><input type="checkbox" name="enableArchivation" value="yes" <?php print( $arch ); ?>>Архивировать файл внешнего источника</label><br />
 			</div>
 			<div>
-				Не добавлять http-рефереры, в которых содержится:<br />
-				<textarea name="blackRefs"><?php print( $res['rows'][0]['blackRefs'] ); ?></textarea>
+				Не добавлять http-рефереры, в которых содержится (по одной маске на строку):<br />
+				<textarea name="blackRefs" style="height: 150px; width: 200px;"><?php print( $res['rows'][0]['blackRefs'] ); ?></textarea>
 			</div>
 			<div>
 				Игнор. маски (разделять запятыми):<br />
-				<textarea name="exMasks"><?php print( $res['rows'][0]['exMasks'] ); ?></textarea>
+				<textarea name="exMasks" style="height: 150px; width: 200px;"><?php print( $res['rows'][0]['exMasks'] ); ?></textarea>
 			</div>			
 			<div>
 				Старый пароль:<br />
@@ -97,7 +149,7 @@ if ( $_SERVER["REQUEST_METHOD"] == 'POST' ) {
 			</div>			
 			<div>
 				<center>
-					<button onClick="$.post( 'ESG_admin.php', { genTime: document.getElementsByName('genTime')[0].value, pathsCount: document.getElementsByName('pathsCount')[0].value, depthsRangeMin: document.getElementsByName('depthsRangeMin')[0].value, depthsRangeMax: document.getElementsByName('depthsRangeMax')[0].value, oldPassword: document.getElementsByName('oldPassword')[0].value, newPassword: document.getElementsByName('newPassword')[0].value, exMasks: document.getElementsByName('exMasks')[0].value, archivation: document.getElementsByName('enableArchivation')[0].value }, function() { Succ(); } );">Сохранить</button>
+					<button onClick="refsFilterMsg( 'center' ); void(0);">Сохранить</button>
 				</center>
 			</div>
 		</div>
