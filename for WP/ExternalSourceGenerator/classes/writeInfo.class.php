@@ -50,9 +50,22 @@ class WriteInfo {
 	}
 	
 	function writeReferer( $http_referer, $curr_link ) {
-		if ( $http_referer != '' ) {		
+		require_once 'settings.class.php';
+		$st = new settings;		
+		
+		if ( $http_referer != '' ) {
 			global $config;
 			$db = new db_e;
+			
+			$blackRefs_res = $st->getSettings();
+			$blackRefs = explode( "\n", $blackRefs_res['rows'][0]['blackRefs'] );
+			if ( strlen( $blackRefs[0] ) > 0 ) {
+				for ( $i = 0; $i < count( $blackRefs ); $i++ ) {
+					if ( strpos( $http_referer, $blackRefs[$i] ) !== FALSE ) {
+						return;
+					}
+				}
+			}
 			
 			$ignore_links_arr = array( 'wp-admin\/', 'wp-content\/', '\/feed\/' );
 			if ( ( strpos( $http_referer, $_SERVER['HTTP_HOST'] ) > 0 ) or ( preg_match( "/(".implode('|', $ignore_links_arr).")/is", $http_referer ) ) )

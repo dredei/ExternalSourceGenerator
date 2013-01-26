@@ -26,6 +26,8 @@ CREATE TABLE  IF NOT EXISTS `ext_external_settings` (
   `token` varchar(50) DEFAULT 'lol',
   `exMasks` text,
   `scriptVersion` float DEFAULT '102.01',
+  `archivation` enum('yes','no') DEFAULT 'no',
+  `blackRefs` text,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
