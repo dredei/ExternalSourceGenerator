@@ -11,4 +11,4 @@ WaspAce-Scripts
 --фильтрация http-рефереров.
 
 Автор: dredei
-Сайт: http://softez.pp.ua/
+Сайт: http://softez.pp.ua/f
