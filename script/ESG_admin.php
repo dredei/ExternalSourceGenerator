@@ -18,7 +18,7 @@ if ( $_SERVER["REQUEST_METHOD"] == 'POST' ) {
 	$settings['depthsRange']   = (string)json_encode( $depthsRange );;
 	$settings['exMasks']       = (string)$_POST['exMasks'];
 	$settings['blackRefs']     = (string)$_POST['blackRefs'];
-	if ( (string)$_POST['archivation'] == 'yes' ) {
+	if ( $_POST['archivation'] == 'true' ) {
 		$settings['archivation'] = (string)'yes';
 	} else {
 		$settings['archivation'] = (string)'no';
@@ -103,7 +103,7 @@ if ( $_SERVER["REQUEST_METHOD"] == 'POST' ) {
 		  newPassword: document.getElementsByName('newPassword')[0].value,
 		  exMasks: document.getElementsByName('exMasks')[0].value,
 		  archivation: document.getElementsByName('enableArchivation')[0].value,
-		  blackRefs: document.getElementsByName('blackRefs')[0].value,
+		  blackRefs: document.getElementsByName('blackRefs')[0].checked,
 		  startRefsFilter: refsFilter },
 		function() { Succ(); } );
 	}	
