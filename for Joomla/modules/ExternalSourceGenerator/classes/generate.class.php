@@ -69,10 +69,13 @@ class Generate {
 	
 	function autoGenerate( $path, $fpath ) {
 		require_once( $fpath.'classes/getInfo.class.php' );
+		require_once( $fpath.'classes/archiveExt.class.php' );
 	
 		global $config;
-		$db = new db_e;
-		$getInfo = new GetInfo;		
+		$db         = new db_e;
+		$getInfo    = new GetInfo;		
+		$archiveExt = new archiveExt;
+		$externalName = 'external.txt';
 		
 		$query = "SELECT * FROM ".$config['db_prefix']."external_settings LIMIT 1";
 		$settings_res = $db->ExecQuery( $query );
@@ -83,18 +86,23 @@ class Generate {
 			$query = "SELECT * FROM ".$config['db_prefix']."external_settings WHERE ( auto_last_gen + INTERVAL auto_gen_time HOUR ) < NOW()";
 			$gen_res = $db->ExecQuery( $query );
 			if ( $gen_res['count'] == 1 ) {
+				$rows = $gen_res['rows'][0];
 				$getInfo = new GetInfo;
-				$pathsCount = $gen_res['rows'][0]['pathsCount'];
-				$pathRange  = json_decode( $gen_res['rows'][0]['depthsRange'], TRUE );				
+				$pathsCount = $rows['pathsCount'];
+				$pathRange  = json_decode( $rows['depthsRange'], TRUE );				
 				
 				$pages    = $getInfo->getPages( 'all' );
 				$referers = $getInfo->getReferers( $pages );
 				$exMasks  = $getInfo->getExMasks();
 				$external = $this->generateItems( $pages, $referers, $pathsCount, $pathRange, $exMasks );
-				$fp = fopen( $path.'external.txt', 'w+' );
+				$fp = fopen( $path.$externalName, 'w+' );
 				$resWrite = fwrite( $fp, $external );
+				fclose( $fp );				
 				$query = "UPDATE ".$config['db_prefix']."external_settings SET auto_last_gen = NOW()";				
 				$db->ExecQuery( $query );
+				if ( $rows['archivation'] == 'yes' ) {
+					$archiveExt->archivation( $externalName, $path );
+				}
 			}
 		}
 	}	

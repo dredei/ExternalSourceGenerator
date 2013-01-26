@@ -17,6 +17,11 @@ if ( $_SERVER["REQUEST_METHOD"] == 'POST' ) {
 	$depthsRange['Max']		   = $_POST['depthsRangeMax'];
 	$settings['depthsRange']   = (string)json_encode( $depthsRange );;
 	$settings['exMasks']       = (string)$_POST['exMasks'];
+	if ( (string)$_POST['archivation'] == 'yes' ) {
+		$settings['archivation'] = 'yes';
+	} else {
+		$settings['archivation'] = 'no';
+	}
 	$st->writeSettings( $settings );
 	Exit;
 }
@@ -53,36 +58,46 @@ if ( $_SERVER["REQUEST_METHOD"] == 'POST' ) {
 	</script>
 	<?php
 		$res = $st->getSettings();
+		$arch = '';
+		if ( $res['rows'][0]['archivation'] == 'yes' ) {
+			$arch = 'checked';
+		}
 	?>
-	
 	<div class="content">	
-		<div class="option">
-			<div class="genTimeOpt">
-				<span>Генерировать внешний источник каждые
-				<input name="genTime" type="number" min="1" max="1000" value="24" required> часа (-ов)</span>
+		<div>
+			<div>
+				Генерировать внешний источник каждые
+				<input name="genTime" type="number" min="1" max="1000" value="24" required> часа (-ов)
 			</div>
-			<div class="pathsCountOpt">
-				<span>Количество путей (paths) для элемента (item): 
-				<input name="pathsCount" type="number" min="1" max="100" value="3" required></span>
+			<div>
+				Количество путей (paths) для элемента (item): 
+				<input name="pathsCount" type="number" min="1" max="100" value="3" required>
 			</div>
-			<div class="depthsRange">
-				<span>Диапазон глубины для пути:</span><br />
+			<div>
+				Диапазон глубины для пути:<br />
 				<span style="padding-left: 15px">От: <input name="depthsRangeMin" type="number" min="1" max="15" value="2" required></span><br />
 				<span style="padding-left: 15px">До: <input name="depthsRangeMax" type="number" min="1" max="15" value="6" required></span>
 			</div>
-			<div class="exMasks">
-				<span>Игнор. маски (разделять запятыми):</span><br />
-				<span><textarea id="exMasks"><?php print( $res['rows'][0]['exMasks'] ); ?></textarea></span>
+			<div>
+				<label><input type="checkbox" name="enableArchivation" value="yes" <?php print( $arch ); ?>>Архивировать файл внешнего источника</label><br />
 			</div>
-			<div class="newPass">
-				<span>Старый пароль:</span><br />
+			<div>
+				Не добавлять http-рефереры, в которых содержится:<br />
+				<textarea name="blackRefs"><?php print( $res['rows'][0]['blackRefs'] ); ?></textarea>
+			</div>
+			<div>
+				Игнор. маски (разделять запятыми):<br />
+				<textarea name="exMasks"><?php print( $res['rows'][0]['exMasks'] ); ?></textarea>
+			</div>			
+			<div>
+				Старый пароль:<br />
 				<span style="padding-left: 15px"><input name="oldPassword" type="password" value=""></span><br />
-				<span>Новый пароль:</span><br />
+				Новый пароль:<br />
 				<span style="padding-left: 15px"><input name="newPassword" type="password" value=""></span>
 			</div>			
-			<div class="saveSett">
+			<div>
 				<center>
-					<button onClick="$.post( 'ESG_admin.php', { genTime: document.getElementsByName('genTime')[0].value, pathsCount: document.getElementsByName('pathsCount')[0].value, depthsRangeMin: document.getElementsByName('depthsRangeMin')[0].value, depthsRangeMax: document.getElementsByName('depthsRangeMax')[0].value, oldPassword: document.getElementsByName('oldPassword')[0].value, newPassword: document.getElementsByName('newPassword')[0].value, exMasks: document.getElementById('exMasks').value }, function() { Succ(); } );">Сохранить</button>
+					<button onClick="$.post( 'ESG_admin.php', { genTime: document.getElementsByName('genTime')[0].value, pathsCount: document.getElementsByName('pathsCount')[0].value, depthsRangeMin: document.getElementsByName('depthsRangeMin')[0].value, depthsRangeMax: document.getElementsByName('depthsRangeMax')[0].value, oldPassword: document.getElementsByName('oldPassword')[0].value, newPassword: document.getElementsByName('newPassword')[0].value, exMasks: document.getElementsByName('exMasks')[0].value, archivation: document.getElementsByName('enableArchivation')[0].value }, function() { Succ(); } );">Сохранить</button>
 				</center>
 			</div>
 		</div>

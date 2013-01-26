@@ -10,17 +10,25 @@ if ( isset($_GET['oldVersion']) ) {
 	$oldVersion = $version->getVersion();
 }
 switch ( $oldVersion ) {
-	case '120.00':
+	case '102.00':
 		$tables[] = "ALTER TABLE ".$config['db_prefix']."external_settings ADD COLUMN `exMasks` text";
 		$tables[] = "ALTER TABLE ".$config['db_prefix']."external_settings ADD COLUMN `scriptVersion` float";
 		$tables[] = "ALTER TABLE ".$config['db_prefix']."external_settings ALTER COLUMN `scriptVersion` SET DEFAULT '102.01'";
 		$tables[] = "UPDATE ".$config['db_prefix']."external_settings SET scriptVersion = 102.01";
 		break;
+	case '102.01':
+		$tables[] = "ALTER TABLE ".$config['db_prefix']."external_settings ADD COLUMN `archivation` ENUM('yes','no')";
+		$tables[] = "ALTER TABLE ".$config['db_prefix']."external_settings ADD COLUMN `blackRefs` text";
+		$tables[] = "ALTER TABLE ".$config['db_prefix']."external_settings ALTER COLUMN `archivation` SET DEFAULT 'no'";
+		$tables[] = "UPDATE ".$config['db_prefix']."external_settings SET archivation = 'no'";
+		$tables[] = "UPDATE ".$config['db_prefix']."external_settings SET scriptVersion = 102.02";
+		break;
 }
-print( 'РќР°С‡РёРЅР°РµРј РѕР±РЅРѕРІР»РµРЅРёРµ Р‘Р”...<br />' );
+print( 'Начинаем обновление БД...<br />' );
 for ( $i = 0; $i < count( $tables ); $i++ ) {
 	$db->ExecQuery( $tables[$i] );
 	print( ($i + 1).'/'.count( $tables ).'<br />' );
 }
-print( 'РћР±РЅРѕРІР»РµРЅРёРµ Р·Р°РІРµСЂС€РµРЅРѕ!' );
+print( 'Обновление завершено!<br />' );
+print( '<b><font color="red">Удалите файлы update.php и install.php !!!</font></b>' );
 ?>

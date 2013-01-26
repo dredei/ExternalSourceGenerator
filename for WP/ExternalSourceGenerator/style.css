@@ -9,5 +9,9 @@ html, body {
     margin: 0 auto;
     width: 60%;
     min-width: 300px;
-    max-width: 900px;
+    max-width: 900px;	
+}
+
+div {
+ padding-bottom: 5px;
 }
