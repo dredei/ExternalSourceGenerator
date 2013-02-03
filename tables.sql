@@ -28,6 +28,7 @@ CREATE TABLE  IF NOT EXISTS `ext_external_settings` (
   `scriptVersion` float DEFAULT '102.01',
   `archivation` enum('yes','no') DEFAULT 'no',
   `blackRefs` text,
+  `dataPeriod` varchar(45) NOT NULL DEFAULT 'all',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
