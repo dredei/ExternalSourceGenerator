@@ -5,6 +5,7 @@ $db = new db_e;
 $version = new version;
 
 function update( $oldVersion ) {
+	global $config;
 	$tables = array();
 	switch ( $oldVersion ) {
 		case '102.00':
@@ -27,7 +28,10 @@ function update( $oldVersion ) {
 		case '102.02':
 			$tables[] = "ALTER TABLE ".$config['db_prefix']."external_settings ADD COLUMN `dataPeriod` varchar(45)";
 			$tables[] = "ALTER TABLE ".$config['db_prefix']."external_settings ALTER COLUMN `dataPeriod` SET DEFAULT 'all'";
+			$tables[] = "UPDATE ".$config['db_prefix']."external_settings SET dataPeriod = 'all'";
 			$tables[] = "UPDATE ".$config['db_prefix']."external_settings SET scriptVersion = 102.03";
+			/*$tables2 = update( 102.03 );
+			$tables = array_merge( $tables, $tables2 );*/
 			break;
 	}
 	return $tables;
