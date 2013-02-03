@@ -118,6 +118,7 @@ if ( $_SERVER["REQUEST_METHOD"] == 'POST' ) {
 		}
 		$period[$res['rows'][0]['dataPeriod']] = 'selected';
 	?>
+	<div align="right">v<?php print( $res['rows'][0]['scriptVersion'] ); ?></div>
 	<div class="content">	
 		<div>
 			<div>
