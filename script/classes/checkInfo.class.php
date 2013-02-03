@@ -11,22 +11,18 @@ class checkInfo {
 		$referers = $referers_res['rows'];
 		
 		$sett = $st->getSettings();
-		$blackRefs = explode( "\n", $sett['rows'][0]['blackRefs'] );
-	
-		$query = "DELETE FROM ".$config['db_prefix']."external_referers WHERE ";
-		$where = "";
+		$blackRefs = explode( "\n", $sett['rows'][0]['blackRefs'] );	
+		
 		for ( $i = 0; $i < count( $blackRefs ); $i++ ) {
 			for ( $j = 0; $j < count( $referers ); $j++ ) {
 				if ( strpos( $referers[$j]['referer'], $blackRefs[$i] ) !== FALSE ) {
-					if ( strlen( $where ) > 0 ) {
-						$where .= " OR ";
-					}
-					$where .= "id=".$referers[$j]['id'];
+					$wr['id'][] = $referers[$j]['id'];
 				}
 			}
 		}
-		if ( strlen( $where ) > 0 ) {
-			$db->ExecQuery( $query.$where );
+		if ( count( $wr['id'] ) > 0 ) {
+			$query = "DELETE FROM ".$config['db_prefix']."external_referers".$db->GenWhere( $wr );
+			$db->ExecQuery( $query );
 		}
 	}
 	
