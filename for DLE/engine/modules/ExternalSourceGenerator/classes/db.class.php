@@ -16,7 +16,7 @@ class db_e {
 		return $result;
 	}
 
-	function GenWhere( $wr, $orAnd = 'AND' ) {
+	/*function GenWhere( $wr, $orAnd = 'AND' ) {
 		$where = '';
 		foreach ( $wr as $field => $value ) {
 			if ( strlen( $where ) > 0 ) $where .= ' '.$orAnd.' ';
@@ -27,6 +27,33 @@ class db_e {
 					$where .= ' `'.$field.'`=\''.mysql_real_escape_string($value).'\'';
 				} else {
 					$where .= ' `'.$field.'`='.mysql_real_escape_string($value).'';
+				}
+			}
+		}
+		$result = ' WHERE '.$where;
+		return $result;
+	}*/
+	function GenWhere( $wr, $orAnd = 'AND' ) {
+		//error_reporting( E_ERROR );
+		$where = '';
+		foreach ( $wr as $field => $value ) {
+			if ( strlen( $where ) > 0 ) $where .= ' '.$orAnd.' ';			
+			if ( (!is_array( $value )) and (preg_match( '/^(NOT\s)?NULL$/', $value )) ) {
+				$where .= ' `'.$field.'` IS '.mysql_real_escape_string( $value ).'';
+			} else {
+				if ( is_array( $value ) ) {
+					$where2 = '';
+					for ( $i = 0; $i < count( $value ); $i++ ) {
+						if ( strlen( $where2 ) > 0 ) $where2 .= ' OR ';
+						$where2 .= " `".$field."`='".$value[$i]."'";
+					}
+					$where .= $where2;
+				} else {
+					if ( is_string( $value ) ) {
+						$where .= " `".$field."`='".mysql_real_escape_string($value)."'";
+					} else {
+						$where .= " `".$field."`=".mysql_real_escape_string($value);
+					}
 				}
 			}
 		}

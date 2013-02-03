@@ -59,9 +59,9 @@ if ( $_SERVER["REQUEST_METHOD"] == 'POST' ) {
 	</head>
 <body>
 	<script type="text/javascript">
-	var refsFilter = false;
+	var refsFilter = false;	
 	
-	function refsFilterMsg(layout) {
+	function filtersMsg(layout) {		
 		if ( document.getElementsByName('blackRefs')[0].value.length > 0 ) {
 			var n = noty({
 			text: 'Применить фильтр к существующим http-реферерам?',
@@ -89,9 +89,9 @@ if ( $_SERVER["REQUEST_METHOD"] == 'POST' ) {
 		}
 	}
 	
-	function Succ() {
+	function Succ(message) {
 		$.noty.consumeAlert({layout: 'topCenter', type: 'success', dismissQueue: true});
-		alert("Настройки сохранены!");
+		alert(message);
 	}
 	
 	function saveSettings() {
@@ -107,7 +107,7 @@ if ( $_SERVER["REQUEST_METHOD"] == 'POST' ) {
 		  blackRefs: document.getElementsByName('blackRefs')[0].checked,
 		  startRefsFilter: refsFilter,
 		  dataPeriod: document.getElementsByName('dataPeriod')[0].value },
-		function() { Succ(); } );
+		function() { Succ("Настройки сохранены!"); } );
 	}	
 	</script>
 	<?php
@@ -162,7 +162,7 @@ if ( $_SERVER["REQUEST_METHOD"] == 'POST' ) {
 			</div>			
 			<div>
 				<center>
-					<button onClick="refsFilterMsg( 'center' ); void(0);">Сохранить</button>
+					<button onClick="filtersMsg( 'center' ); void(0);">Сохранить</button>
 				</center>
 			</div>
 		</div>

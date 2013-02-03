@@ -29,5 +29,28 @@ class checkInfo {
 			$db->ExecQuery( $query.$where );
 		}
 	}
+	
+	function deleteRobotsUA() {
+		require_once 'browser.class.php';
+		global $config;
+		$db = new db_e;
+		$browser = new BrowserExt;
+		
+		$wr['id'] = array();
+		$query = "SELECT * FROM ".$config['db_prefix']."external_ua";
+		$ua_res = $db->ExecQuery( $query );
+		$ua = $ua_res['rows'];
+		for ( $i = 0; $i < count( $ua ); $i++ ) {
+			$userAgent = $ua[$i]['ua'];
+			$browser->Browser( $userAgent );
+			if ( $browser->isRobot() ) {
+				$wr['id'][] = $ua[$i]['id'];
+			}
+		}
+		if ( count( $wr['id'] ) > 0 ) {
+			$query = "DELETE FROM ".$config['db_prefix']."external_ua".$db->GenWhere( $wr );
+			$db->ExecQuery( $query );
+		}
+	}
 }
 ?>

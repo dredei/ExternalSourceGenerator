@@ -10,7 +10,7 @@ class WriteInfo {
 		$browser->Browser( $userAgent );
 		$browser_name = $browser->getBrowser();
 		$browser_version = $browser->getVersion();
-		if ( $browser_name == 'unknown' )
+		if ( ( $browser_name == 'unknown' ) or ( $browser->isRobot() ) )
 			return;
 		$os = $browser->getPlatform();
 		$ua = $browser->getUserAgent();
