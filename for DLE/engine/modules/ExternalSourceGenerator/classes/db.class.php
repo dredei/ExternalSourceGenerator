@@ -15,26 +15,8 @@ class db_e {
 		}
 		return $result;
 	}
-
-	/*function GenWhere( $wr, $orAnd = 'AND' ) {
-		$where = '';
-		foreach ( $wr as $field => $value ) {
-			if ( strlen( $where ) > 0 ) $where .= ' '.$orAnd.' ';
-			if ( preg_match( '/^(NOT\s)?NULL$/', $value ) ) {
-				$where .= ' `'.$field.'` IS '.mysql_real_escape_string( $value ).'';
-			} else {
-				if ( is_string( $value ) ) {
-					$where .= ' `'.$field.'`=\''.mysql_real_escape_string($value).'\'';
-				} else {
-					$where .= ' `'.$field.'`='.mysql_real_escape_string($value).'';
-				}
-			}
-		}
-		$result = ' WHERE '.$where;
-		return $result;
-	}*/
+	
 	function GenWhere( $wr, $orAnd = 'AND' ) {
-		//error_reporting( E_ERROR );
 		$where = '';
 		foreach ( $wr as $field => $value ) {
 			if ( strlen( $where ) > 0 ) $where .= ' '.$orAnd.' ';			
