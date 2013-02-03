@@ -8,6 +8,8 @@ $cI = new checkInfo;
 
 function update( $oldVersion ) {
 	global $config;
+	global $cI;
+	
 	$tables = array();
 	switch ( $oldVersion ) {
 		case '102.00':
