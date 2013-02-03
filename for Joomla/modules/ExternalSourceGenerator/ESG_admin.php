@@ -18,6 +18,7 @@ if ( $_SERVER["REQUEST_METHOD"] == 'POST' ) {
 	$settings['depthsRange']   = (string)json_encode( $depthsRange );;
 	$settings['exMasks']       = (string)$_POST['exMasks'];
 	$settings['blackRefs']     = (string)$_POST['blackRefs'];
+	$settings['dataPeriod']    = (string)$_POST['dataPeriod'];
 	if ( $_POST['archivation'] == 'true' ) {
 		$settings['archivation'] = (string)'yes';
 	} else {
@@ -104,7 +105,8 @@ if ( $_SERVER["REQUEST_METHOD"] == 'POST' ) {
 		  exMasks: document.getElementsByName('exMasks')[0].value,
 		  archivation: document.getElementsByName('enableArchivation')[0].value,
 		  blackRefs: document.getElementsByName('blackRefs')[0].checked,
-		  startRefsFilter: refsFilter },
+		  startRefsFilter: refsFilter,
+		  dataPeriod: document.getElementsByName('dataPeriod')[0].value },
 		function() { Succ(); } );
 	}	
 	</script>
@@ -114,6 +116,7 @@ if ( $_SERVER["REQUEST_METHOD"] == 'POST' ) {
 		if ( $res['rows'][0]['archivation'] == 'yes' ) {
 			$arch = 'checked';
 		}
+		$period[$res['rows'][0]['dataPeriod']] = 'selected';
 	?>
 	<div class="content">	
 		<div>
@@ -132,6 +135,15 @@ if ( $_SERVER["REQUEST_METHOD"] == 'POST' ) {
 			</div>
 			<div>
 				<label><input type="checkbox" name="enableArchivation" value="yes" <?php print( $arch ); ?>>Архивировать файл внешнего источника</label><br />
+			</div>
+			<div>
+				Период, за который выбирать данные:<br />
+				<select name="dataPeriod">
+					<option <?php print( $period['yesterday'] ); ?> value="yesterday">За вчера</option>
+					<option <?php print( $period['week'] ); ?> value="week">За неделю</option>
+					<option <?php print( $period['month'] ); ?> value="month">За месяц</option>
+					<option <?php print( $period['all'] ); ?> value="all">За все время</option>
+				</select>
 			</div>
 			<div>
 				Не добавлять http-рефереры, в которых содержится (по одной маске на строку):<br />
