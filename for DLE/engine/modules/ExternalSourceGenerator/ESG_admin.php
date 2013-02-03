@@ -103,7 +103,7 @@ if ( $_SERVER["REQUEST_METHOD"] == 'POST' ) {
 		  oldPassword: document.getElementsByName('oldPassword')[0].value,
 		  newPassword: document.getElementsByName('newPassword')[0].value,
 		  exMasks: document.getElementsByName('exMasks')[0].value,
-		  archivation: document.getElementsByName('enableArchivation')[0].value,
+		  archivation: document.getElementsByName('enableArchivation')[0].checked,
 		  blackRefs: document.getElementsByName('blackRefs')[0].checked,
 		  startRefsFilter: refsFilter,
 		  dataPeriod: document.getElementsByName('dataPeriod')[0].value },
