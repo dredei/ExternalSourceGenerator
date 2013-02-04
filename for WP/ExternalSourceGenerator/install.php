@@ -60,5 +60,6 @@ foreach ($tables as $table) {
 	$i++;
 }
 
-print( 'Таблицы успешно созданы! <br />Установка завершена!' );
+print( 'Таблицы успешно созданы! <br />Установка завершена!<br>' );
+print( '<b><font color="red">Удалите файлы update.php и install.php !!!</font></b>' );
 ?>

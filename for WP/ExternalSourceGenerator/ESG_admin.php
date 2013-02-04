@@ -59,7 +59,17 @@ if ( $_SERVER["REQUEST_METHOD"] == 'POST' ) {
 	</head>
 <body>
 	<script type="text/javascript">
-	var refsFilter = false;	
+	var refsFilter = false;
+	
+	function error(layout, message) {
+		var n = noty({
+			text: message,
+			type: 'error',
+			dismissQueue: true,
+			layout: layout,
+			theme: 'defaultTheme'
+		});
+	}
 	
 	function filtersMsg(layout) {		
 		if ( document.getElementsByName('blackRefs')[0].value.length > 0 ) {
@@ -108,7 +118,12 @@ if ( $_SERVER["REQUEST_METHOD"] == 'POST' ) {
 		  startRefsFilter: refsFilter,
 		  dataPeriod: document.getElementsByName('dataPeriod')[0].value },
 		function() { Succ("Настройки сохранены!"); } );
-	}	
+	}
+	<?php
+		if ( (file_exists( 'install.php' )) or (file_exists( 'update.php' )) ) {
+			print( 'error("topLeft", "Удалите файлы <u>update.php</u> и <u>install.php</u> !!!");' );
+		}
+	?>
 	</script>
 	<?php
 		$res = $st->getSettings();
