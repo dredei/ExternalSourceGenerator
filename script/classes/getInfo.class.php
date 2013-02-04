@@ -27,7 +27,8 @@ class getInfo {
 		$pages_res = $db->ExecQuery( $query );
 		for ( $i = 0; $i < $pages_res['count']; $i++ ) {
 			$pages[$pages_count]['Page'] = $pages_res['rows'][$i]['page'];
-			$pages[$pages_count++]['Priority'] = $pages_res['rows'][$i]['count'];
+			//$pages[$pages_count++]['Priority'] = $pages_res['rows'][$i]['count'];
+			$pages[$pages_count++]['Priority'] = rand( 1, $pages_res['rows'][$i]['count'] );
 		}
 		return $pages;		
 	}
@@ -48,7 +49,8 @@ class getInfo {
 			} else {
 				for ( $j = 0; $j < $referers_res['count']; $j++ ) {
 					$referers[$page][$ref_count]['Referer'] = $referers_res['rows'][$j]['referer'];
-					$referers[$page][$ref_count++]['Priority'] = $referers_res['rows'][$j]['count'];
+					//$referers[$page][$ref_count++]['Priority'] = $referers_res['rows'][$j]['count'];
+					$referers[$page][$ref_count++]['Priority'] = rand( 1, $referers_res['rows'][$j]['count'] );
 				}
 			}
 		}
