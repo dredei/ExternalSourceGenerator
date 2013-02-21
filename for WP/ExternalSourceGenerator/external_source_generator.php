@@ -24,8 +24,8 @@ Author URI: http://softez.pp.ua/
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-add_action( 'admin_menu', 'external_source_generator_add_option_page');
-add_action( 'admin_menu', 'external_source_generator_add_sub_generate_page');
+//add_action( 'admin_menu', 'external_source_generator_add_option_page');
+//add_action( 'admin_menu', 'external_source_generator_add_sub_generate_page');
 
 function external_source_generator_add_option_page() {
 	add_menu_page( 'External Source Generator (WaspAce)', 'ExtSource Gen',  8, 'external_source_generator.php', 'external_source_generator_option_page' ); 
