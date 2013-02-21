@@ -33,9 +33,10 @@ $tables[] = "CREATE TABLE  IF NOT EXISTS `".$config['db_prefix']."external_setti
   `password` varchar(50) DEFAULT '21232f297a57a5a743894a0e4a801fc3',
   `token` varchar(50) DEFAULT 'lol',
   `exMasks` text,
-  `scriptVersion` float DEFAULT '102.01',
+  `scriptVersion` float DEFAULT '102.04',
   `archivation` enum('yes','no') DEFAULT 'no',
   `blackRefs` text,
+  `dataPeriod` varchar(45) DEFAULT 'all'
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;";
 
