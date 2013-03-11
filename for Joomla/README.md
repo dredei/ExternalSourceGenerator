@@ -28,6 +28,7 @@ WaspAce-Scripts
 4. Переименовать config.php.new в config.php (если до копирования его не существовало!) и указать в нем настройки подключения к бд.
 5. Запустить install.php , который находится modules/ExternalSourceGenerator/ .
 6. После установки/обновления удалите install.php и update.php !
+7. Админка: ESG_admin.php , пароль: admin .
 
 Обновление:
 1. Скопировать папку modules в корень сайта (подтвердить замену).
