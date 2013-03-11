@@ -29,3 +29,8 @@ WaspAce-Scripts
 4. Переименовать config.php.new в config.php (если до копирования его не существовало!) и указать в нем настройки подключения к бд.
 5. Запустить install.php , который находится в папке engine/modules/ExternalSourceGenerator/ .
 6. После установки/обновления удалите install.php и update.php !
+
+Обновление:
+1. Скопировать папку engine в корень сайта (подтвердить замену).
+2. Запустить update.php .
+3. После обновления удалить install.php и update.php !
