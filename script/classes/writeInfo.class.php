@@ -57,11 +57,25 @@ class WriteInfo {
 			global $config;
 			$db = new db_e;
 			
-			$blackRefs_res = $st->getSettings();
-			$blackRefs = explode( "\n", $blackRefs_res['rows'][0]['blackRefs'] );
+			$settings_res = $st->getSettings();
+			$blackRefs = explode( "\n", $settings_res['rows'][0]['blackRefs'] );
 			if ( strlen( $blackRefs[0] ) > 0 ) {
 				for ( $i = 0; $i < count( $blackRefs ); $i++ ) {
 					if ( strpos( $http_referer, $blackRefs[$i] ) !== FALSE ) {
+						return;
+					}
+				}
+			} else {
+				$whiteRefs = explode( "\n", $settings_res['rows'][0]['whiteRefs'] );
+				$found = FALSE;
+				if ( strlen( $whiteRefs[0] ) > 0 ) {
+					for ( $i = 0; $i < count( $whiteRefs ); $i++ ) {
+						if ( strpos( $http_referer, $whiteRefs[$i] ) !== FALSE ) {
+							$found = TRUE;
+							break;
+						}
+					}
+					if ( $found == FALSE ) {
 						return;
 					}
 				}

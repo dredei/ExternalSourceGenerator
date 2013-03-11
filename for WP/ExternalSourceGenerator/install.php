@@ -37,6 +37,7 @@ $tables[] = "CREATE TABLE  IF NOT EXISTS `".$config['db_prefix']."external_setti
   `archivation` enum('yes','no') DEFAULT 'no',
   `blackRefs` text,
   `dataPeriod` varchar(45) DEFAULT 'all',
+  `whiteRefs` text,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;";
 

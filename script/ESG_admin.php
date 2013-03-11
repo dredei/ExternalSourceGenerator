@@ -18,13 +18,14 @@ if ( $_SERVER["REQUEST_METHOD"] == 'POST' ) {
 	$settings['depthsRange']   = (string)json_encode( $depthsRange );;
 	$settings['exMasks']       = (string)$_POST['exMasks'];
 	$settings['blackRefs']     = (string)$_POST['blackRefs'];
+	$settings['whiteRefs']     = (string)$_POST['whiteRefs'];
 	$settings['dataPeriod']    = (string)$_POST['dataPeriod'];
 	if ( $_POST['archivation'] == 'true' ) {
 		$settings['archivation'] = (string)'yes';
 	} else {
 		$settings['archivation'] = (string)'no';
 	}
-	$st->writeSettings( $settings );	
+	$st->writeSettings( $settings );
 	if ( $_POST['startRefsFilter'] === 'true' ) {
 		require_once 'classes/checkInfo.class.php';
 		
@@ -114,10 +115,23 @@ if ( $_SERVER["REQUEST_METHOD"] == 'POST' ) {
 		  newPassword: document.getElementsByName('newPassword')[0].value,
 		  exMasks: document.getElementsByName('exMasks')[0].value,
 		  archivation: document.getElementsByName('enableArchivation')[0].checked,
-		  blackRefs: document.getElementsByName('blackRefs')[0].checked,
+		  blackRefs: document.getElementsByName('blackRefs')[0].value,
+		  whiteRefs: document.getElementsByName('whiteRefs')[0].value,
 		  startRefsFilter: refsFilter,
 		  dataPeriod: document.getElementsByName('dataPeriod')[0].value },
 		function() { Succ("Настройки сохранены!"); } );
+	}
+	
+	function strlen(obj) {
+	 return document.getElementsByName( obj )[0].value.length;
+	}
+	
+	function disableEnableObj(objName, disableObjName) {
+		if ( strlen( objName ) ) {
+			document.getElementsByName(disableObjName)[0].disabled = true;
+		} else {
+			document.getElementsByName(disableObjName)[0].disabled = false;
+		}
 	}
 	<?php
 		if ( (file_exists( 'install.php' )) or (file_exists( 'update.php' )) ) {
@@ -163,12 +177,19 @@ if ( $_SERVER["REQUEST_METHOD"] == 'POST' ) {
 			</div>
 			<div>
 				Не добавлять http-рефереры, в которых содержится (по одной маске на строку):<br />
-				<textarea name="blackRefs" style="height: 150px; width: 200px;"><?php print( $res['rows'][0]['blackRefs'] ); ?></textarea>
+				<textarea name="blackRefs" style="height: 150px; width: 200px;" onChange="javascript: disableEnableObj( 'blackRefs', 'whiteRefs' )"><?php print( $res['rows'][0]['blackRefs'] ); ?></textarea>
+			</div>
+			<div>
+				<center><font color="red"><u>ИЛИ</u></font></center>
+			</div>
+			<div>
+				Добавлять http-рефереры, в которых содержится (по одной маске на строку):<br />
+				<textarea name="whiteRefs" style="height: 150px; width: 200px;" onChange="javascript: disableEnableObj( 'whiteRefs', 'blackRefs' )"><?php print( $res['rows'][0]['whiteRefs'] ); ?></textarea>
 			</div>
 			<div>
 				Игнор. маски (разделять запятыми):<br />
 				<textarea name="exMasks" style="height: 150px; width: 200px;"><?php print( $res['rows'][0]['exMasks'] ); ?></textarea>
-			</div>			
+			</div>
 			<div>
 				Старый пароль:<br />
 				<span style="padding-left: 15px"><input name="oldPassword" type="password" value=""></span><br />

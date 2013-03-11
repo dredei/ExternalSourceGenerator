@@ -25,6 +25,7 @@ if ( is_plugin_active( 'ExternalSourceGenerator/external_source_generator.php' )
 	$writeInfo->writePage( $_SERVER['REQUEST_URI'] );
 	
 	$generate->autoGenerate( 'wp-content/plugins/ExternalSourceGenerator/', 'wp-content/plugins/ExternalSourceGenerator/' );
+	mysql_close();
 }
 
 3. Переименовать файл external.txt.new в external.txt (если до копирования его не существовало!) , выставить права на запись (666).

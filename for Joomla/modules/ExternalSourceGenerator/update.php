@@ -40,7 +40,14 @@ function update( $oldVersion ) {
 		case '102.03':
 			$cI->deleteRobotsUA();
 			$tables[] = "UPDATE ".$config['db_prefix']."external_settings SET scriptVersion = 102.04";
-			/*$tables2 = update( 102.04 );
+			$tables2 = update( 102.04 );
+			$tables = array_merge( $tables, $tables2 );
+			break;
+		case '102.04':
+			$cI->deleteRobotsUA();
+			$tables[] = "ALTER TABLE ".$config['db_prefix']."external_settings ADD COLUMN `whiteRefs` text";
+			$tables[] = "UPDATE ".$config['db_prefix']."external_settings SET scriptVersion = 102.05";
+			/*$tables2 = update( 102.05 );
 			$tables = array_merge( $tables, $tables2 );*/
 			break;
 	}

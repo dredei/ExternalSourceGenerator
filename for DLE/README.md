@@ -22,6 +22,7 @@ WaspAce-Scripts
 	$writeInfo->writePage( $_SERVER['REQUEST_URI'] );
 	
 	$generate->autoGenerate( '', 'engine/modules/ExternalSourceGenerator/' );
+	mysql_close();
 	
 2. Скопировать папку engine и файл external.txt.new в корень сайта, подтвердить замену .
 3. Переименовать файл external.txt.new в external.txt (если до копирования его не существовало!) , выставить права на запись (666).
