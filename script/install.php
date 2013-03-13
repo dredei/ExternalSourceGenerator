@@ -53,6 +53,7 @@ $tables[] = "CREATE TABLE  IF NOT EXISTS `".$config['db_prefix']."external_ua` (
   `date` date DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;";
+$tables[] = "INSERT INTO ".$config['db_prefix']."external_settings (auto_gen_time, auto_last_gen) VALUES (24, NOW())";
 print( 'Начинаем создание таблиц...<br />' );
 
 $i = 1;
