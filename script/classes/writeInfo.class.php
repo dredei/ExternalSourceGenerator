@@ -53,7 +53,7 @@ class WriteInfo {
 		require_once 'settings.class.php';
 		$st = new settings;		
 		
-		if ( $http_referer != '' ) {
+		if ( ( $http_referer != '' ) and ( $http_referer != 'http://' ) ) {
 			global $config;
 			$db = new db_e;
 			
