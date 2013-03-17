@@ -119,7 +119,7 @@ class WriteInfo {
 		global $config;
 		$db = new db_e;
 		
-		$ignore_links_arr = array( 'wp-admin\/', 'wp-content\/' );			
+		$ignore_links_arr = array( 'wp-admin\/', 'wp-content\/', '.jpg', '.png', '.ico', '.jpeg', '.gif', '.bmp' );			
 		if ( ( preg_match( "/(".implode('|', $ignore_links_arr).")/is", $curr_link ) ) )
 			return;
 
@@ -129,9 +129,5 @@ class WriteInfo {
 		$query = "INSERT INTO ".$config['db_prefix']."external_pages".$db->GenInsert( $ins ).' ON DUPLICATE KEY UPDATE count = count + 1, `date` = NOW()';
 		$db->ExecQuery( $query );
 	}
-
 }
-
-
-
 ?>
