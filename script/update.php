@@ -47,7 +47,16 @@ function update( $oldVersion ) {
 			$cI->deleteRobotsUA();
 			$tables[] = "ALTER TABLE ".$config['db_prefix']."external_settings ADD COLUMN `whiteRefs` text";
 			$tables[] = "UPDATE ".$config['db_prefix']."external_settings SET scriptVersion = 102.05";
-			/*$tables2 = update( 102.05 );
+			$tables2 = update( 102.05 );
+			$tables = array_merge( $tables, $tables2 );
+			break;
+		case '102.05':
+			$cI->deleteRobotsUA();
+			$tables[] = "ALTER TABLE ".$config['db_prefix']."external_settings ADD COLUMN `externalFileName` varchar(45)";
+			$tables[] = "ALTER TABLE ".$config['db_prefix']."external_settings ALTER COLUMN `externalFileName` SET DEFAULT 'external.txt'";
+			$tables[] = "UPDATE ".$config['db_prefix']."external_settings SET externalFileName = 'external.txt'";
+			$tables[] = "UPDATE ".$config['db_prefix']."external_settings SET scriptVersion = 102.06";
+			/*$tables2 = update( 102.06 );
 			$tables = array_merge( $tables, $tables2 );*/
 			break;
 	}

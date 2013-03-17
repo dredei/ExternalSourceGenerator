@@ -38,6 +38,7 @@ $tables[] = "CREATE TABLE  IF NOT EXISTS `".$config['db_prefix']."external_setti
   `blackRefs` text,
   `dataPeriod` varchar(45) DEFAULT 'all',
   `whiteRefs` text,
+  `externalFileName` varchar(45) DEFAULT 'external.txt',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;";
 

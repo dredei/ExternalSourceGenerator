@@ -20,6 +20,7 @@ if ( $_SERVER["REQUEST_METHOD"] == 'POST' ) {
 	$settings['blackRefs']     = (string)$_POST['blackRefs'];
 	$settings['whiteRefs']     = (string)$_POST['whiteRefs'];
 	$settings['dataPeriod']    = (string)$_POST['dataPeriod'];
+	$settings['externalFileName']    = (string)$_POST['externalFileName'];
 	if ( $_POST['archivation'] == 'true' ) {
 		$settings['archivation'] = (string)'yes';
 	} else {
@@ -118,7 +119,8 @@ if ( $_SERVER["REQUEST_METHOD"] == 'POST' ) {
 		  blackRefs: document.getElementsByName('blackRefs')[0].value,
 		  whiteRefs: document.getElementsByName('whiteRefs')[0].value,
 		  startRefsFilter: refsFilter,
-		  dataPeriod: document.getElementsByName('dataPeriod')[0].value },
+		  dataPeriod: document.getElementsByName('dataPeriod')[0].value,
+		  externalFileName: document.getElementsByName('externalFileName')[0].value },
 		function() { Succ("Настройки сохранены!"); } );
 	}
 	
@@ -153,6 +155,10 @@ if ( $_SERVER["REQUEST_METHOD"] == 'POST' ) {
 			<div>
 				Генерировать внешний источник каждые
 				<input name="genTime" type="number" min="1" max="1000" value="24" required> часа (-ов)
+			</div>
+			<div>
+				Имя внешнего источника:
+				<input name="externalFileName" type="text" value="external.txt" required>
 			</div>
 			<div>
 				Количество путей (paths) для элемента (item): 
@@ -210,8 +216,9 @@ if ( $_SERVER["REQUEST_METHOD"] == 'POST' ) {
 		
 			print( "document.getElementsByName('genTime')[0].value = ".$res['rows'][0]['auto_gen_time'].';' );
 			print( "document.getElementsByName('pathsCount')[0].value = ".$res['rows'][0]['pathsCount'].';' );
+			print( "document.getElementsByName('externalFileName')[0].value = '".$res['rows'][0]['externalFileName']."';" );
 			print( "document.getElementsByName('depthsRangeMin')[0].value = ".$pathRange['Min'].';' );
-			print( "document.getElementsByName('depthsRangeMax')[0].value = ".$pathRange['Max'].';' );
+			print( "document.getElementsByName('depthsRangeMax')[0].value = ".$pathRange['Max'].';' );			
 		}
 	?>
 	</script>

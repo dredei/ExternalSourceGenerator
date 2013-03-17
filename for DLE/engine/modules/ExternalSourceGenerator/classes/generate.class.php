@@ -75,7 +75,7 @@ class Generate {
 		$db         = new db_e;
 		$getInfo    = new GetInfo;		
 		$archiveExt = new archiveExt;
-		$externalName = 'external.txt';
+		//$externalName = 'external.txt';
 		
 		$query = "SELECT * FROM ".$config['db_prefix']."external_settings LIMIT 1";
 		$settings_res = $db->ExecQuery( $query );
@@ -83,6 +83,7 @@ class Generate {
 			$query = "INSERT INTO ".$config['db_prefix']."external_settings (auto_gen_time, auto_last_gen) VALUES (24, NOW())";
 			$db->ExecQuery( $query );
 		} else {
+			$externalName = $settings_res['rows'][0]['externalFileName'];
 			$query = "SELECT * FROM ".$config['db_prefix']."external_settings WHERE ( auto_last_gen + INTERVAL auto_gen_time HOUR ) < NOW()";
 			$gen_res = $db->ExecQuery( $query );
 			if ( $gen_res['count'] == 1 ) {
