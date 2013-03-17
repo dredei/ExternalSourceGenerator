@@ -16,7 +16,8 @@ CREATE TABLE  IF NOT EXISTS `ext_external_referers` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
-CREATE TABLE  IF NOT EXISTS `ext_external_settings` (
+DROP TABLE IF EXISTS `ext_external_settings`;
+CREATE TABLE  `ext_external_settings` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `auto_gen_time` int(10) unsigned DEFAULT '24',
   `auto_last_gen` datetime DEFAULT NULL,
@@ -29,6 +30,8 @@ CREATE TABLE  IF NOT EXISTS `ext_external_settings` (
   `archivation` enum('yes','no') DEFAULT 'no',
   `blackRefs` text,
   `dataPeriod` varchar(45) NOT NULL DEFAULT 'all',
+  `whiteRefs` text,
+  `externalFileName` varchar(45) DEFAULT 'external.txt',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
