@@ -20,6 +20,7 @@ if ( $_SERVER["REQUEST_METHOD"] == 'POST' ) {
 	$settings['blackRefs']     = (string)$_POST['blackRefs'];
 	$settings['whiteRefs']     = (string)$_POST['whiteRefs'];
 	$settings['dataPeriod']    = (string)$_POST['dataPeriod'];
+	$settings['blackPages']    = (string)$_POST['blackPages'];
 	$settings['externalFileName']    = (string)$_POST['externalFileName'];
 	if ( $_POST['archivation'] == 'true' ) {
 		$settings['archivation'] = (string)'yes';
@@ -42,7 +43,7 @@ if ( $_SERVER["REQUEST_METHOD"] == 'POST' ) {
 		<title>External Source Generator (WaspAce)</title>
 		<link href="style.css" type="text/css" rel="stylesheet">
 		<link rel="stylesheet" type="text/css" href="buttons.css"/>
-		<script src="http://code.jquery.com/jquery-1.9.0.min.js" type="text/javascript"></script>
+		<script type="text/javascript" src="js/jquery-1.9.0.min.js"></script>
 		<script type="text/javascript" src="js/noty/jquery.noty.js"></script>
 		<script type="text/javascript" src="js/noty/layouts/center.js"></script>
 		<script type="text/javascript" src="js/noty/themes/default.js"></script>
@@ -120,7 +121,8 @@ if ( $_SERVER["REQUEST_METHOD"] == 'POST' ) {
 		  whiteRefs: document.getElementsByName('whiteRefs')[0].value,
 		  startRefsFilter: refsFilter,
 		  dataPeriod: document.getElementsByName('dataPeriod')[0].value,
-		  externalFileName: document.getElementsByName('externalFileName')[0].value },
+		  externalFileName: document.getElementsByName('externalFileName')[0].value,
+		  blackPages: document.getElementsByName('blackPages')[0].value },
 		function() { Succ("Настройки сохранены!"); } );
 	}
 	
@@ -191,6 +193,10 @@ if ( $_SERVER["REQUEST_METHOD"] == 'POST' ) {
 			<div>
 				Добавлять http-рефереры, в которых содержится (по одной маске на строку):<br />
 				<textarea name="whiteRefs" style="height: 150px; width: 200px;" onChange="javascript: disableEnableObj( 'whiteRefs', 'blackRefs' )"><?php print( $res['rows'][0]['whiteRefs'] ); ?></textarea>
+			</div>
+			<div>
+				Не добавлять страницы, в которых содержится (по одной маске на строку):<br />
+				<textarea name="blackPages" style="height: 150px; width: 200px;"><?php print( $res['rows'][0]['blackPages'] ); ?></textarea>
 			</div>
 			<div>
 				Игнор. маски (разделять запятыми):<br />

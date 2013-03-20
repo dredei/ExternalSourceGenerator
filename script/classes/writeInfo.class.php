@@ -116,18 +116,30 @@ class WriteInfo {
 	}
 	
 	function writePage( $curr_link ) {
+		require_once 'settings.class.php';
 		global $config;
 		$db = new db_e;
+		$st = new settings;		
+		
+		$settings_res = $st->getSettings();
+		$blackPages = explode( "\n", $settings_res['rows'][0]['blackPages'] );
+		if ( strlen( $blackPages[0] ) > 0 ) {
+			for ( $i = 0; $i < count( $blackPages ); $i++ ) {
+				if ( strpos( $curr_link, $blackPages[$i] ) !== FALSE ) {
+					return FALSE;
+				}
+			}
+		}
 		
 		$ignore_links_arr = array( 'wp-admin\/', 'wp-content\/', '.jpg', '.png', '.ico', '.jpeg', '.gif', '.bmp' );			
 		if ( ( preg_match( "/(".implode('|', $ignore_links_arr).")/is", $curr_link ) ) )
 			return;
-
 		$ins['count'] = 1;
 		$ins['page'] = $curr_link;
 		$ins['date'] = date( 'Y-m-d' );
 		$query = "INSERT INTO ".$config['db_prefix']."external_pages".$db->GenInsert( $ins ).' ON DUPLICATE KEY UPDATE count = count + 1, `date` = NOW()';
 		$db->ExecQuery( $query );
+		return TRUE;
 	}
 }
 ?>
