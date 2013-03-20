@@ -4,7 +4,7 @@ require_once 'classes/version.class.php';
 require_once 'classes/checkInfo.class.php';
 $db = new db_e;
 $version = new version;
-$cI = new checkInfo;
+print( '<meta charset="UTF-8">' );
 
 function update( $oldVersion ) {
 	global $config;
@@ -38,7 +38,7 @@ function update( $oldVersion ) {
 			$tables = array_merge( $tables, $tables2 );
 			break;
 		case '102.03':
-			$cI->deleteRobotsUA();
+			checkInfo::deleteRobotsUA();
 			$tables[] = "UPDATE ".$config['db_prefix']."external_settings SET scriptVersion = 102.04";
 			$tables2 = update( 102.04 );
 			$tables = array_merge( $tables, $tables2 );
@@ -58,6 +58,7 @@ function update( $oldVersion ) {
 			$tables = array_merge( $tables, $tables2 );
 			break;
 		case '102.06':
+			checkInfo::deleteHttp();
 			$tables[] = "ALTER TABLE ".$config['db_prefix']."external_settings ADD COLUMN `blackPages` text";
 			$tables[] = "UPDATE ".$config['db_prefix']."external_settings SET scriptVersion = 102.07";
 			/*$tables2 = update( 102.07 );
@@ -73,11 +74,11 @@ if ( isset($_GET['oldVersion']) ) {
 	$oldVersion = $version->getVersion();
 }
 $tables = update( $oldVersion );
-print( 'Начинаем обновление БД...<br />' );
+print( 'РќР°С‡РёРЅР°РµРј РѕР±РЅРѕРІР»РµРЅРёРµ Р‘Р”...<br />' );
 for ( $i = 0; $i < count( $tables ); $i++ ) {
 	$db->ExecQuery( $tables[$i] );
 	print( ($i + 1).'/'.count( $tables ).'<br />' );
 }
-print( 'Обновление завершено!<br />' );
-print( '<b><font color="red">Удалите файлы update.php и install.php !!!</font></b>' );
+print( 'РћР±РЅРѕРІР»РµРЅРёРµ Р·Р°РІРµСЂС€РµРЅРѕ!<br />' );
+print( '<b><font color="red">РЈРґР°Р»РёС‚Рµ С„Р°Р№Р»С‹ update.php Рё install.php !!!</font></b>' );
 ?>

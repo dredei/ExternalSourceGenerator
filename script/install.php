@@ -2,6 +2,7 @@
 require_once 'config.php';
 
 $db = new db_e;
+print( '<meta charset="UTF-8">' );
 
 $tables[] = "DROP TABLE IF EXISTS `".$config['db_prefix']."external_pages`";
 $tables[] = "CREATE TABLE IF NOT EXISTS  `".$config['db_prefix']."external_pages` (
@@ -33,7 +34,7 @@ $tables[] = "CREATE TABLE  IF NOT EXISTS `".$config['db_prefix']."external_setti
   `password` varchar(50) DEFAULT '21232f297a57a5a743894a0e4a801fc3',
   `token` varchar(50) DEFAULT 'lol',
   `exMasks` text,
-  `scriptVersion` float DEFAULT '102.04',
+  `scriptVersion` float DEFAULT '102.07',
   `archivation` enum('yes','no') DEFAULT 'no',
   `blackRefs` text,
   `dataPeriod` varchar(45) DEFAULT 'all',
