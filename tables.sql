@@ -32,6 +32,7 @@ CREATE TABLE  `ext_external_settings` (
   `dataPeriod` varchar(45) NOT NULL DEFAULT 'all',
   `whiteRefs` text,
   `externalFileName` varchar(45) DEFAULT 'external.txt',
+  `blackPages` text,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
