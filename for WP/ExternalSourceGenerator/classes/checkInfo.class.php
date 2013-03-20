@@ -48,5 +48,13 @@ class checkInfo {
 			$db->ExecQuery( $query );
 		}
 	}
+	
+	function deleteHttp() {
+		global $config;
+		$db = new db_e;
+	
+		$query = "DELETE FROM ".$config['db_prefix']."external_referers WHERE referer='http://' OR referer='https://'";
+		$db->ExecQuery( $query );
+	}
 }
 ?>

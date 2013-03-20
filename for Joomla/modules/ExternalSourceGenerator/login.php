@@ -10,7 +10,8 @@ if ( $_POST['login'] == 'login' ) {
 		setcookie('token', $token, time() + 60 * 60 * 24 * 14);
 		$_SESSION['lg'] = 'lg';
 	}
-	header("Location: ESG_admin.php");
+	$referer = $_POST['referer'];
+	header("Location: ".$referer);
 	exit;
 }
 ?>
@@ -29,6 +30,7 @@ if ( $_POST['login'] == 'login' ) {
 					<span class="clickbox referers">Пароль:</span><br />
 					<span><input name="password" type="password" value=""></span><br />
 					<input name="ok" type="submit">
+					<input type="hidden" value="<?php print( $_GET['referer'] ); ?>" name="referer">
 					<input type="hidden" value="login" name="login">
 				</form>
 			</div>

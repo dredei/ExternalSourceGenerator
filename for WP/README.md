@@ -20,9 +20,11 @@ if ( is_plugin_active( 'ExternalSourceGenerator/external_source_generator.php' )
     $writeInfo = new WriteInfo;
 	$generate = new Generate;
 
-	$writeInfo->writeUA( $_SERVER['REQUEST_URI'], $_SERVER['HTTP_USER_AGENT'] );
-	$writeInfo->writeReferer( $_SERVER['HTTP_REFERER'], $_SERVER['REQUEST_URI'] );
-	$writeInfo->writePage( $_SERVER['REQUEST_URI'] );
+	$resP = $writeInfo->writePage( $_SERVER['REQUEST_URI'] );
+	if ( $resP == TRUE ) {
+		$writeInfo->writeUA( $_SERVER['REQUEST_URI'], $_SERVER['HTTP_USER_AGENT'] );
+		$writeInfo->writeReferer( $_SERVER['HTTP_REFERER'], $_SERVER['REQUEST_URI'] );
+	}
 	
 	$generate->autoGenerate( 'wp-content/plugins/ExternalSourceGenerator/', 'wp-content/plugins/ExternalSourceGenerator/' );
 	mysql_close();

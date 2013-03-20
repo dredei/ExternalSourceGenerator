@@ -17,7 +17,8 @@ if ( $st->checkToken( $token ) === false ) {
 }
 
 if ( ( !isset($_SESSION['lg']) ) or ( $_SESSION['lg'] == 'nlg' ) ) {
-	header("Location: login.php");
+	$referer = $_SERVER['REQUEST_URI'];
+	header("Location: login.php?referer=".$referer);
 	die();
 }
 ?>
