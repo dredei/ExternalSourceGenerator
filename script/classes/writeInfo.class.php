@@ -53,7 +53,10 @@ class WriteInfo {
 		require_once 'settings.class.php';
 		$st = new settings;		
 		
-		if ( ( $http_referer != '' ) and ( $http_referer != 'http://' ) ) {
+		if ( ( $http_referer != '' ) and ( $http_referer != 'http://' ) and ( $http_referer != 'https://' ) ) {
+			$ignoreRefsArr = array( 'wp-admin\/', 'wp-content\/', '.jpg', '.png', '.ico', '.jpeg', '.gif', '.bmp' );			
+			if ( ( preg_match( "/(".implode('|', $ignoreRefsArr).")/is", $http_referer ) ) )
+				return;
 			global $config;
 			$db = new db_e;
 			
