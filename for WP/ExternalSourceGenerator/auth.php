@@ -1,5 +1,6 @@
 <?php
 session_start();
+require_once( '../../../wp-config.php' );
 require_once 'config.php';
 require_once 'classes/settings.class.php';
 

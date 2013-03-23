@@ -1,7 +1,8 @@
 <?php
 if ( $_POST['login'] == 'login' ) {
-	require_once("config.php");
-	require_once("classes/settings.class.php");
+	require_once( '../../../wp-config.php' );
+	require_once( "config.php" );
+	require_once( "classes/settings.class.php" );
 	
 	$password = $_POST['password'];
 	$st = new settings;

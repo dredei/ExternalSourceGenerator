@@ -1,4 +1,5 @@
 <?php
+require_once( '../../../wp-config.php' );
 require_once 'config.php';
 
 $db = new db_e;
