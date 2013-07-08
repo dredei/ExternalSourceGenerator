@@ -49,16 +49,18 @@ class Generate {
 	
 	function generateItems( $pages, $referers, $pathsCount, $pathRange, $exMasks ) { // генерирует итэм для каждой страницы - отдельный
 		$items['Items'] = array();
-		for ( $i = 0; $i < count( $pages ); $i++ ) {
+		for ( $i = 0; $i < count( $pages ); $i++ ) {			
 			$item = array();
 			$page = $pages[$i]['Page'];
-			$page_referers = $referers[$page];
-			$item['Pages'][0] = $pages[$i];
-			if ( count( $page_referers ) > 0 ) {
-				$item['Referers'] = $page_referers;
+			if ( count( $referers[$page] ) > 0 ) {
+				$page_referers = $referers[$page];
+				$item['Pages'][0] = $pages[$i];
+				if ( count( $page_referers ) > 0 ) {
+					$item['Referers'] = $page_referers;
+				}
+				$item['Paths'] = $this->generatePaths( $pathsCount, $pathRange );
+				$items['Items'][] = $item;
 			}
-			$item['Paths'] = $this->generatePaths( $pathsCount, $pathRange );
-			$items['Items'][] = $item;
 		}
 		if ( count( $exMasks ) > 0 ) {
 			$items['ExMasks'] = $exMasks;
