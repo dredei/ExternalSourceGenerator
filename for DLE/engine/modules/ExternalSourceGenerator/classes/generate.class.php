@@ -92,7 +92,7 @@ class Generate {
 				$pathsCount = $rows['pathsCount'];
 				$pathRange  = json_decode( $rows['depthsRange'], TRUE );				
 				
-				$pages    = $getInfo->getPages( 'all' );
+				$pages    = $getInfo->getPages( $settings_res['rows'][0]['dataPeriod'] );
 				$referers = $getInfo->getReferers( $pages );
 				$exMasks  = $getInfo->getExMasks();
 				$external = $this->generateItems( $pages, $referers, $pathsCount, $pathRange, $exMasks );
